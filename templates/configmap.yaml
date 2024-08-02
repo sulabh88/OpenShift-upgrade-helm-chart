@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: release-image-{{ .Values.targetversionmajor }}.{{ .Values.targetversionpatch }}
+  namespace: {{ .Values.configMap.namespace }}
+  labels:
+    {{- range $label, $value := .Values.configMap.labels }}
+    {{ $label }}: {{ $value | quote }}
+    {{- end }}
+    release: {{ .Release.Name }}
+binaryData:
+  {{ .Values.configMap.DIGEST_ALGO }}-{{ .Values.configMap.DIGEST_ENCODED }}: {{ .Values.configMap.SIGNATURE_BASE64 }}

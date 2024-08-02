@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: post-sync-
+  annotations:
+    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "1"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  activeDeadlineSeconds: 86400
+  template:
+    spec:
+      containers:
+      - name: test
+        image: "{{ .Values.testImage }}"
+        command:
+        - /bin/sh
+        - /files/post-sync-scripts/post-sync-job.sh
+        volumeMounts:
+        - mountPath: /files/post-sync-scripts
+          name: post-sync
+      restartPolicy: Never
+      serviceAccountName: openshift-cluster-upgrade
+      serviceAccount: openshift-cluster-upgrade
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: post-sync
+        name: post-sync
+  backoffLimit: 1
+

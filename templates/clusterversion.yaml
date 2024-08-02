@@ -1,0 +1,13 @@
+{{- if (lookup "config.openshift.io/v1" "ClusterVersion" "" "version") }}
+apiVersion: config.openshift.io/v1
+kind: ClusterVersion
+metadata:
+  name: version
+  labels:
+    release: {{ .Release.Name }}
+  annotations:
+    meta.helm.sh/release-namespace: openshift-cluster-upgrade
+spec:
+  channel: stable-{{ .Values.targetversionmajor }}
+  clusterID: {{ (lookup "config.openshift.io/v1" "ClusterVersion" "" "version").spec.clusterID }}
+{{- end }}

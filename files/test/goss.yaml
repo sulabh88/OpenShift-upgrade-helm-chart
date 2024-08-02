@@ -1,0 +1,15 @@
+command:
+  check the cluster version if upgraded:
+    exec: oc get clusterversion version -o jsonpath='{.status.conditions[?(@.type=="Progressing")].message}{"\n"}'
+    exit-status: 0
+    stderr: []
+    timeout: 30000
+    stdout:
+    - Cluster version is 4.14.31
+  check if cluster upgrade process is completed:
+    exec: oc get clusterversion version -o jsonpath='{.status.conditions[?(@.type=="Progressing")].status}{"\n"}'
+    exit-status: 0
+    stderr: []
+    timeout: 30000
+    stdout:
+    - False

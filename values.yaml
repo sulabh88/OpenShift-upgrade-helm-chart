@@ -1,0 +1,32 @@
+# Default values for cluster-upgrade.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+targetversionmajor: "4.14"
+targetversionpatch: 23
+configMap:
+  DIGEST_ALGO: sha256
+  DIGEST_ENCODED: e4424eeec8a386241a5348d556bdd6dd82ea68f4f19f30f71d18963fb5924e9e
+  SIGNATURE_BASE64: owGbwMvMwMEoOU9/4l9n2UDGtYwpSWLxRQW5xZnpukWphbpppZ4ZFW56SZl5aSWhP6qVkosySzKTE3OUrBSqlTJzE9NTwayU/OTs1CLd3MS8zLTU4hLdlMx0IAWUUirOSDQyNbNKNTExMklNTU22SDS2MDMyMUw0NTaxSDE1NUtKSTFLSbEwSk00s0gzSTO0TDM2SDM3TDG0sDQzTksytQTqs0xVqtVRUCqpLABZp5RYkp+bmayQnJ9XkpiZl1qkAHRtXmJJaVGqElBVZkpqXklmSSWyw4pS01KLUvOSwdoLSxMr9TLz9fMLUvOKMzLTSoDSOamJxam6Kall+vnJBTC+lYmeoYmesaFuhYVZvJmJUi3IEfkFJZn5edAQSC5KBTqmCGRqUGqKgkdiiYI/0NRgkKkKwUBXZealKziWlmTkA8OtUsFAz0DPEGhMJ5MMCwMjBwMbKxMoWBm4OAVgUbAzn/+f8lpHXub1hWf/6HNJMzJcP5/qxlZ7Ic7qbcR0YzPpbxL3FBbI89wOsW58KxZe3L1Y4pxJWAKPREDt4+Kc3KfiaftzZiZuOPL437SCOLap56etfGi6kbMsrmF99s+TKQdyfHY55B+eMOldor/01VTnq65MTueN/R1WJ+yf2Njk0pe87Eei0qO+TU3H6xZ6Bx/Qnvx8y91q+9ezt/7OWjX/k2GW6aMHE1fP5ND5d/VY29MFchw5OyYu5mN3KGS8EMA3m2e+31rphRuCdCRDv5/33xka5BAyf+LjdYYX1/nzaYn6iUe0tG/K1+uQ+uM9M/DMrX1nhEsdp2xbs9Knpy33Aoul0r6CkwZZrt92XHF/OaPljZRkmVrwv1cBMx6JvHE68V5O9YfOGkXfl/XaIapnkvQ3Z8VJPFWPymU+zaDNHXPRIK4/XSO/1kKk9udDZQ65apvvvp81bZad6anV5nOo5v4+pWpnq6Ke64yKvfau2uoZd6R976tqBgee2jpZKf/bX6cz9snCiWaJZ07Kq+ptXeqwvE5UcOtCmVitJdN3z+qvOis0pfo0r612/hfZI+lTpl3sWeq8JfCnvicrx4VAEz6Vah0+RvHjCfIT/+tvefV53q+qxkfbjjzOD9C+PjEkfMrzFuY/U78rMd7tOFtpkLDvYUiKVffpTcxmFVvVz8trhDGvYjy6aPlRobLJ25NdOm00G78+mfxuBgA= 
+  namespace: openshift-config-managed
+  labels:
+    "release.openshift.io/verification-signatures": ""
+
+image:
+  repository: oc-image
+  pullPolicy: IfNotPresent
+  tag: ""
+upgrade_image: openshift-release-dev/ocp-release
+pod_name: adm-upgrade-pod
+
+adminAck: ack-4.13-kube-1.27-api-removals-in-4.14
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+testImage: binary-image

@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+  name: {{ template "openshift-cluster-upgrade.fullname" . }}
+  labels:
+    release: {{ .Release.Name }}
+spec:
+  template:
+    metadata:
+      name: {{ template "openshift-cluster-upgrade.fullname" . }}
+      labels:
+        release: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ template "openshift-cluster-upgrade.fullname" . }}
+      restartPolicy: OnFailure
+      containers:
+      - name: {{ .Values.pod_name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command:
+        - oc
+        - adm 
+        - upgrade
+        args:
+        - "--to-image"
+        - "{{ .Values.upgrade_image }}@{{ .Values.configMap.DIGEST_ALGO }}:{{ .Values.configMap.DIGEST_ENCODED }}"
+        - "--allow-explicit-upgrade"
+        imagePullPolicy: "{{ .Values.image.pullPolicy }}"
